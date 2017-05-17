@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    form(method="post", action="/books")
+        input(type="text", name="name", placeholder="Nome")
+        br
+        br
+        input(type="text", name="author", placeholder="Autor")
+        br
+        br
+        input(type="submit", value="Salvar")
