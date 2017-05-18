@@ -15,7 +15,15 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/create', function(req, res, next) {
-    res.render('new_books');
+    db.Authors.findAll()
+            .then(function(result){
+                res.render('new_books', {
+                    authors: result
+                });
+            })
+            .catch(function(err){
+                console.log('ERROR ', err);
+            });
 });
 
 router.get('/count', function(req, res, next) {
@@ -31,23 +39,23 @@ router.get('/count', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-    db.Books.findOrCreate({
-        where: {
-            name: req.body.name
-        },
-        defaults: req.body
-    })
-    .spread(function(book, bookCreated){
-        console.log('Book => ', book);
-        console.log('Book Created => ', bookCreated);
-    });
-    // db.Books.create(req.body)
-    //         .then(function(result){
-    //             res.redirect('/books');
-    //         })
-    //         .catch(function(err){
-    //             console.log('ERROR ', err);
-    //         });
+    // db.Books.findOrCreate({
+    //     where: {
+    //         name: req.body.name
+    //     },
+    //     defaults: req.body
+    // })
+    // .spread(function(book, bookCreated){
+    //     console.log('Book => ', book);
+    //     console.log('Book Created => ', bookCreated);
+    // });
+    db.Books.create(req.body)
+            .then(function(result){
+                res.redirect('/books');
+            })
+            .catch(function(err){
+                console.log('ERROR ', err);
+            });
 });
 
 module.exports = router;

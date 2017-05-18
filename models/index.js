@@ -14,7 +14,16 @@ fs.readdirSync(__dirname)
     db[model.name] = model;
   });
 
-  module.exports = lodash.extend({
-    Sequelize: Sequelize,
-    sequelize: sequelize
-  }, db);
+Object.keys(db)
+      .forEach(function(model){
+          if (!db[model].hasOwnProperty('associate')) {
+              return;
+          } else {
+              return db[model].associate(db);
+          }
+      });
+
+module.exports = lodash.extend({
+  Sequelize: Sequelize,
+  sequelize: sequelize
+}, db);

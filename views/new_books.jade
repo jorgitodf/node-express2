@@ -5,7 +5,9 @@ block content
         input(type="text", name="name", placeholder="Nome")
         br
         br
-        input(type="text", name="author", placeholder="Autor")
+        select(name="AuthorId")
+          each author in authors
+              option(value=author.id)=author.name
         br
         br
         input(type="submit", value="Salvar")
